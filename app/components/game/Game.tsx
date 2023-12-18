@@ -5,7 +5,7 @@ import React, { useState, useEffect } from "react";
 export default function Game() {
   const [selectedSquare, setSelectedSquare] = useState(null);
 
-  const handleSquareSelect = (bgColorClass) => {
+  const handleSquareSelect = (bgColorClass: any) => {
     if (selectedSquare === bgColorClass) {
       // Deselect if the square is already selected
       setSelectedSquare(null);
@@ -20,18 +20,8 @@ export default function Game() {
     setSelectedSquare(null);
   };
 
-  useEffect(() => {
-    // Add a click event listener to the window to handle deselection
-    window.addEventListener("click", handleWindowClick);
-
-    // Cleanup the event listener on component unmount
-    return () => {
-      window.removeEventListener("click", handleWindowClick);
-    };
-  }, []);
-
   return (
-    <div className="h-96 p-20">
+    <div className="h-96 p-20 mb-20">
       <div className="grid gap-4 grid-cols-2 grid-rows-2">
         <SquareComponent
           bgColorClass="bg-pink-500"
