@@ -1,6 +1,7 @@
 "use client";
 import SquareComponent from "../square/Square";
 import React, { useState, useEffect } from "react";
+import BidComponent from "../bid/Bid";
 
 export default function Game() {
   const [selectedSquare, setSelectedSquare] = useState(null);
@@ -15,14 +16,13 @@ export default function Game() {
     }
   };
 
-  const handleWindowClick = () => {
-    // Deselect when clicking outside the squares
+  const handleClearSelection = () => {
     setSelectedSquare(null);
   };
 
   return (
-    <div className="h-96 p-20 mb-20">
-      <div className="grid gap-4 grid-cols-2 grid-rows-2">
+    <div className="p-20 mb-20 flex flex-col justify-center items-center">
+      <div className="grid gap-6 grid-cols-2 grid-rows-2">
         <SquareComponent
           bgColorClass="bg-pink-500"
           onSelect={handleSquareSelect}
@@ -44,12 +44,10 @@ export default function Game() {
           selected={selectedSquare === "bg-violet-500"}
         />
       </div>
-      {selectedSquare && (
-        <p className="mt-4">
-          Selected Square:{" "}
-          <span className={`inline-block w-6 h-6 ${selectedSquare}`} />
-        </p>
-      )}
+      <BidComponent
+        selectedSquare={selectedSquare}
+        clearSelection={handleClearSelection}
+      />
     </div>
   );
 }
