@@ -1,7 +1,7 @@
 "use client";
 
 // import { Button } from "@nextui-org/react";
-import Button from "../button/Button";
+import Button from "../buttons/Button";
 
 export default function Settings() {
   return (
