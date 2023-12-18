@@ -6,7 +6,7 @@ import Button from "../button/Button";
 export default function Settings() {
   return (
     <div className="container mx-auto mt-24 py-5 px-5 md:w-[60rem] bg-gray-50 rounded-lg">
-      <div className="flex">
+      <div className="">
         <Button
           text="Instructions"
           onClick={() => {
