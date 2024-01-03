@@ -3,7 +3,7 @@
 // import { Button } from "@nextui-org/react";
 import Button from "../buttons/Button";
 
-export default function Settings() {
+export default function Settings({ koins }) {
   return (
     <div className="container mx-auto mt-24 py-5 px-5 md:w-[60rem] bg-gray-50 rounded-lg">
       <div className="">
@@ -31,7 +31,7 @@ export default function Settings() {
             console.log("Restart");
           }}
         />
-        <h1>Koins 5000</h1>
+        <h1>Koins {koins}</h1>
       </div>
     </div>
   );

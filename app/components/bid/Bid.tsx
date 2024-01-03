@@ -1,10 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "../buttons/Button";
 
-const BidComponent = ({ selectedSquare, clearSelection }) => {
+const BidComponent = ({
+  koins,
+  selectedSquare,
+  clearSelection,
+  setBidAmount,
+}) => {
   const [selectedOption, setSelectedOption] = useState(null);
   const [sliderValue, setSliderValue] = useState(50);
+
+  useEffect(() => {
+    setBidAmount(selectedOption);
+  }, [selectedOption]);
 
   const handleOptionClick = (amount) => {
     const clampedAmount = Math.min(amount, 1000); // Clamp to 1000
@@ -74,7 +83,7 @@ const BidComponent = ({ selectedSquare, clearSelection }) => {
             onChange={(e) => {
               const newValue = Math.min(
                 Math.max(Number(e.target.value), 0), // Restrict to positive values
-                10000 // Restrict to values below 10000
+                koins // Restrict to values below koins
               );
               setSelectedOption(newValue);
               setSliderValue(newValue / 10);
