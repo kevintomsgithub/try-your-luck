@@ -1,38 +1,48 @@
 "use client";
 
-// import { Button } from "@nextui-org/react";
 import Button from "../buttons/Button";
+import React, { useState } from "react";
+import Modal from "../modal/Modal";
 
-export default function Settings({ koins }) {
+export default function Settings() {
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
+
   return (
-    <div className="container mx-auto mt-24 py-5 px-5 md:w-[60rem] bg-gray-50 rounded-lg">
-      <div className="">
-        <Button
-          text="Instructions"
-          onClick={() => {
-            console.log("Restart");
-          }}
-        />
-        <Button
-          text="Start"
-          onClick={() => {
-            console.log("Start");
-          }}
-        />
-        <Button
-          text="Restart"
-          onClick={() => {
-            console.log("Restart");
-          }}
-        />
-        <Button
-          text="Draws"
-          onClick={() => {
-            console.log("Restart");
-          }}
-        />
-        <h1>Koins {koins}</h1>
-      </div>
+    <div className="flex justify-center px-5 md:w-[60rem] rounded-lg">
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h1 className="text-center text-xl mb-4">How to play?</h1>
+        <ul className="list-disc pl-6">
+          <li className="mb-2">Step 1: Select a square to bid.</li>
+          <li className="mb-2">
+            Step 2: Select the amount to bid on the square.
+          </li>
+          <li className="mb-2">
+            Step 3: Click on the Bid button to bid your amount.
+          </li>
+        </ul>
+      </Modal>
+      <Button text="Instructions" onClick={openModal} />
+      <Button
+        text="Start Game"
+        onClick={() => {
+          console.log("Start Game");
+        }}
+      />
+      {/* <Button
+        text="Restart"
+        onClick={() => {
+          console.log("Restart");
+        }}
+      /> */}
+      {/* <Button
+        text="Draws"
+        onClick={() => {
+          console.log("Restart");
+        }}
+      /> */}
     </div>
   );
 }
