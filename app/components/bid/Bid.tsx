@@ -4,6 +4,8 @@ import Button from "../buttons/Button";
 
 const BidComponent = ({
   koins,
+  isFrozen,
+  setIsFrozen,
   selectedSquare,
   clearSelection,
   setBidAmount,
@@ -31,21 +33,25 @@ const BidComponent = ({
     setSelectedOption(null);
     setSliderValue(0);
     clearSelection(); // Callback to clear selection in Game component
+    setIsFrozen(false);
+  };
+
+  const handleBidClick = () => {
+    setIsFrozen(true);
   };
 
   return (
-    <div className="bg-gray-100 p-8 rounded-lg shadow-lg mt-8">
+    <div
+      className={`bg-gray-100 p-5 rounded-lg shadow-lg mt-8 text-center ${
+        isFrozen ? "frozen border-2 border-red-500" : ""
+      }`}
+    >
       <div>
-        <h2 className="text-2xl font-semibold mb-4">
-          Select Bid Amount:{" "}
-          <span className={`inline-block w-6 h-6 ${selectedSquare}`} />
+        <h2 className="text-md mb-4">
+          Select Bid Amount
+          <span className={`inline-block w-5 h-5 ml-3 ${selectedSquare}`} />
         </h2>
-        <div className="flex space-x-4">
-          <Button
-            text="$10"
-            onClick={() => handleOptionClick(10)}
-            selected={selectedOption === 10}
-          />
+        <div className="flex justify-center">
           <Button
             text="$100"
             onClick={() => handleOptionClick(100)}
@@ -63,20 +69,18 @@ const BidComponent = ({
           />
         </div>
       </div>
-      <div className="mt-8">
-        <h2 className="text-2xl font-semibold mb-4">
-          Adjust Bid Amount with Slider:
-        </h2>
+      <div className="mt-5">
+        <h2 className="text-md mb-4">Bid Amount Slider</h2>
         <input
           type="range"
           min="0"
           max="100"
           value={sliderValue}
           onChange={handleSliderChange}
-          className="w-full h-8 rounded-full bg-gray-300 appearance-none focus:outline-none focus:shadow-outline"
+          className="w-full mb-3 h-5 rounded-full bg-gray-300 appearance-none focus:outline-none focus:shadow-outline"
         />
-        <p className="mt-4">
-          Selected Amount: $
+        <div className="flex justify-center">
+          <p className="mt-4 pt-[.1rem]">Amount: 💰</p>
           <input
             type="number"
             value={selectedOption || ""}
@@ -88,13 +92,13 @@ const BidComponent = ({
               setSelectedOption(newValue);
               setSliderValue(newValue / 10);
             }}
-            className="border border-gray-400 px-2 py-1 rounded-md ml-2"
+            className="w-28 mt-4 border border-gray-400 px-2 py-1 mt-3 rounded-md ml-2"
           />
-        </p>
+        </div>
       </div>
       <div className="mt-4">
-        <Button text="Clear" onClick={handleClearClick} />
-        <Button text="Lock" />
+        <Button text="Reset 🧹" onClick={handleClearClick} />
+        <Button text="Bid 💰" onClick={handleBidClick} />
       </div>
     </div>
   );
