@@ -8,14 +8,27 @@ import LoadingBar from "../loading/Loading";
 export default function Game() {
   const [koins, setKoins] = useState(800);
   const [bidAmount, setBidAmount] = useState(50);
+  const [isFrozen, setIsFrozen] = useState(false);
   const [selectedSquare, setSelectedSquare] = useState(null);
+  const [lastWinSquareIndex, setLastWinSquareIndex] = useState(null);
   const [selectedSquareIndex, setSelectedSquareIndex] = useState(null); // New state for the selected square index
 
+  const squareBgColors = [
+    "bg-pink-500",
+    "bg-blue-500",
+    "bg-cyan-500",
+    "bg-violet-500",
+  ];
+
   const bidAmountRef = useRef(bidAmount);
+  const selectedSquareIndexRef = useRef(selectedSquareIndex);
 
   useEffect(() => {
     bidAmountRef.current = bidAmount;
   }, [bidAmount]);
+  useEffect(() => {
+    selectedSquareIndexRef.current = selectedSquareIndex;
+  }, [selectedSquareIndex]);
 
   const handleSquareSelect = (bgColorClass, squareIndex) => {
     if (selectedSquare === bgColorClass) {
@@ -32,44 +45,65 @@ export default function Game() {
     setSelectedSquareIndex(null);
   };
 
+  function getRandomNumber() {
+    return Math.floor(Math.random() * 5); // Generates a random integer between 0 and 4 (inclusive)
+  }
+
   const runBid = () => {
-    setKoins((currKoins) => currKoins + bidAmountRef.current);
+    const winningSquareIndex = getRandomNumber();
+    setLastWinSquareIndex(winningSquareIndex);
+    console.log("---------------");
+    console.log(` winningSquareIndex: ${winningSquareIndex}`);
+    console.log(`selectedSquareIndex: ${selectedSquareIndexRef.current}`);
+    if (selectedSquareIndexRef.current === winningSquareIndex) {
+      setKoins((currKoins) => currKoins + bidAmountRef.current);
+    }
+    setIsFrozen(false);
   };
 
   return (
-    <div>
+    <div className="my-24 font-mono">
       <LoadingBar runBid={runBid} />
-      <Settings koins={koins} />
-      <div className="p-20 mb-20 flex flex-col justify-center items-center">
+      <Settings />
+      <h1 className="w-full text-center py-4 font-bold">Koins 💰{koins}</h1>
+      <div className="mb-15 flex flex-col justify-center items-center">
         <div className="grid gap-6 grid-cols-2 grid-rows-2">
           <SquareComponent
-            bgColorClass="bg-pink-500"
+            bgColorClass={squareBgColors[0]}
             onSelect={(bgColorClass) => handleSquareSelect(bgColorClass, 0)}
-            selected={selectedSquare === "bg-pink-500"}
+            selected={selectedSquareIndex === 0}
           />
           <SquareComponent
-            bgColorClass="bg-blue-500"
+            bgColorClass={squareBgColors[1]}
             onSelect={(bgColorClass) => handleSquareSelect(bgColorClass, 1)}
-            selected={selectedSquare === "bg-blue-500"}
+            selected={selectedSquareIndex === 1}
           />
           <SquareComponent
-            bgColorClass="bg-cyan-500"
+            bgColorClass={squareBgColors[2]}
             onSelect={(bgColorClass) => handleSquareSelect(bgColorClass, 2)}
-            selected={selectedSquare === "bg-cyan-500"}
+            selected={selectedSquareIndex === 2}
           />
           <SquareComponent
-            bgColorClass="bg-violet-500"
+            bgColorClass={squareBgColors[3]}
             onSelect={(bgColorClass) => handleSquareSelect(bgColorClass, 3)}
-            selected={selectedSquare === "bg-violet-500"}
+            selected={selectedSquareIndex === 3}
           />
         </div>
-        <BidComponent
-          koins={koins}
-          selectedSquare={selectedSquare}
-          clearSelection={handleClearSelection}
-          setBidAmount={setBidAmount}
-        />
       </div>
+      <h1 className="text-center py-5">
+        Last Win Square -{" "}
+        <span
+          className={`inline-block w-5 h-5 ml-3 ${squareBgColors[lastWinSquareIndex]}`}
+        />
+      </h1>
+      <BidComponent
+        koins={koins}
+        selectedSquare={selectedSquare}
+        clearSelection={handleClearSelection}
+        setBidAmount={setBidAmount}
+        isFrozen={isFrozen}
+        setIsFrozen={setIsFrozen}
+      />
     </div>
   );
 }

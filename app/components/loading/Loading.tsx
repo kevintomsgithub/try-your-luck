@@ -40,7 +40,7 @@ const LoadingBar = ({ runBid }) => {
 
   return (
     <div
-      className="mt-16 fixed h-2 top-0 left-0 h-1 bg-pink-400 duration-100"
+      className="mt-16 fixed h-2 top-0 left-0 bg-pink-400 duration-100"
       style={{ width: `${progress}%` }}
     />
   );
