@@ -11,7 +11,7 @@ const Button: React.FC<ButtonProps> = ({ text, onClick, selected }) => {
     <button
       type="button"
       onClick={onClick}
-      className={`px-5 py-2 rounded-xl border hover:bg-gray-300 duration-300 ease-in-out ${
+      className={`mx-3 px-5 py-2 text-sm rounded-xl border hover:bg-gray-300 duration-300 ease-in-out ${
         selected ? "bg-gray-300" : "border-gray-400"
       }`}
     >
